@@ -1,0 +1,7 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+    prefix: /api/crypto/v1
+    name_prefix: api_symfony_vault_
