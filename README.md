@@ -74,9 +74,34 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 -subj "/C=DE/ST=NRW/L=Duesseldorf/O=Dev/CN=localhost"`
 ```
 
-and make sure the entrypoint.sh file has the right permission:
+and make sure the entrypoint.sh and test_vault_endpoints.sh file has the right permission:
 
 `chmod +x ./docker/vault/entrypoint.sh`
+
+`chmod +x test_vault_endpoints.sh`
+
+## After you finish the previous step:
+
+Simply run `docker compose up -d`, after the containers are up, run the test script:
+
+```bash
+./test_vault_endpoints.sh
+```
+
+You will see following:
+
+```bash
+🔐 Encrypting...
+Ciphertext: vault:v1:something
+🔓 Decrypting...
+Plaintext: Hello World!
+✍️  Signing...
+Signature: vault:v1:something else
+✅ Verifying...
+Valid: true
+🎉 Test successful complete!
+
+```
 
 ## Vault Entrypoint
 
@@ -164,17 +189,6 @@ try {
 } catch (ClientExceptionInterface $e) {
     return $this->json(['error' => 'Invalid signature or malformed request.'], 400);
 }
-```
-
----
-
-## Testing the API
-
-Use the included `test_vault_endpoints.sh` script to test all endpoints:
-
-```bash
-chmod +x test_vault_endpoints.sh
-./test_vault_endpoints.sh
 ```
 
 ---
